@@ -2,14 +2,18 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8" />
-    <title>Smart Home</title>
+    <title>Ruth</title>
     <style>
         body {
           font-family: "Segoe UI", sans-serif;
-          background-color: #0a0f2c;
+          background-color: #171e28;
           color: white;
           padding: 20px;
         }
+
+        * {
+    color: white !important;
+  }
 
         h1, h2 {
           text-align: center;
@@ -22,7 +26,7 @@
           max-width: 400px;
           margin: 10px auto;
           padding: 12px;
-          background-color: #1e88e5;
+          background-color: #2d3540;
           border: none;
           border-radius: 8px;
           color: white;
@@ -30,7 +34,7 @@
     }
 
     button:hover {
-      background-color: #0c2a4d;
+      background-color: #181f29;
     }
 
     #rolActual {
@@ -41,7 +45,7 @@
     }
 
     #logEventos {
-      background-color: #1a237e;
+      background-color: #2d3540;
       margin: 20px auto;
       padding: 10px;
       width: 90%;
@@ -60,59 +64,99 @@
     </style>
 </head>
 <body>
-<h1>Panel de Control</h1>
-<h1>Sapos todos</h1>
+<h1>Ruth</h1>
 
-<h2>Cerradura Principal</h2>
-<div id="estadoCerradura" style="text-align:center; margin-bottom:10px;">Estado: Cargando...</div>
-<button onclick="toggleCerradura()">Alternar Cerradura</button>
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">🗝️ Cerradura Principal</h2>
+  <div id="estadoCerradura" style="text-align: center; margin-bottom: 15px; font-weight: bold;">
+    Estado: Cargando...
+  </div>
+  <div style="text-align: center;">
+    <button onclick="toggleCerradura()">Alternar Cerradura</button>
+  </div>
+</div>
 
-<!-- 👤 Rol Actual y Botón -->
-<h2>Cambio de Rol</h2>
-<div id="rolActual">Rol: Cargando...</div>
-<button id="btnAccesoPadre" onclick="cambiarRol()">Cambiar Rol</button>
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">➰ Cambio de Rol</h2>
 
-<button onclick="registrarUsuarioFaceIO()">Registrar rostro</button>
+  <div id="rolActual" style="text-align: center; margin-bottom: 15px; font-weight: bold;">
+    Rol: Cargando...
+  </div>
 
-<!-- 🔁 Botón de reinicio con PIN -->
-<h2>Reinicio Seguro</h2>
-<button onclick="reiniciarApp()">Reiniciar aplicación</button>
+  <div style="text-align: center; margin-bottom: 10px;">
+    <button id="btnAccesoPadre" onclick="cambiarRol()">Cambiar Rol</button>
+  </div>
 
+  <div style="text-align: center;">
+    <button onclick="registrarUsuarioFaceIO()">Registrar rostro</button>
+  </div>
+</div>
 
-<!-- 🔦 Luces -->
-<h2>Luces</h2>
-<button onclick="toggleLed('cocina')">Cocina</button>
-<button onclick="toggleLed('sala')">Sala</button>
-<button onclick="toggleLed('bano')">Baño</button>
-<button onclick="toggleLed('alcoba')">Alcoba</button>
-
-<!-- 🚨 Alarma -->
-<h2>Alarma</h2>
-<button onclick="toggleAlarma()">Activar/Desactivar Alarma</button>
-<!-- 🪟 Persiana -->
-<h2>Persiana</h2>
-<button onclick="setPersiana(1)">Subir Persiana</button>
-<button onclick="setPersiana(0)">Bajar Persiana</button>
-
-<!-- 🌡 Temperatura -->
-<h2>Temperatura</h2>
-<button onclick="leerTemperatura()">Leer Temperatura</button>
-<div id="tempOutput" class="output"></div>
-
-<!-- 💧 Calidad del Agua -->
-<h2>Calidad del Agua (TDS)</h2>
-<button onclick="leerTDS()">Leer TDS</button>
-<div id="tdsOutput" class="output"></div>
-
-<!-- 🛢 Nivel del Tanque -->
-<h2>Nivel del Tanque</h2>
-<button onclick="leerTanque()">Leer Nivel</button>
-<div id="tanqueOutput" class="output"></div>
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">🔄️ Reinicio Seguro</h2>
+  
+  <div style="text-align: center;">
+    <button id="btnReiniciarApp" onclick="reiniciarApp()">Reiniciar aplicación</button>
+  </div>
+</div>
 
 
-<!-- 🧾 Log de eventos -->
-<h2>Eventos</h2>
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">💡 Luces</h2>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+    <button onclick="toggleLed('cocina')">Cocina</button>
+    <button onclick="toggleLed('sala')">Sala</button>
+    <button onclick="toggleLed('bano')">Baño</button>
+    <button onclick="toggleLed('alcoba')">Alcoba</button>
+  </div>
+</div>
+
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">🚨 Alarma</h2>
+
+  <div style="text-align: center;">
+    <button onclick="toggleAlarma()">Activar/Desactivar Alarma</button>
+  </div>
+</div>
+
+
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">🪟 Persiana</h2>
+
+  <div style="text-align: center;">
+    <button onclick="setPersiana(1)">Subir Persiana</button>
+    <button onclick="setPersiana(0)">Bajar Persiana</button>
+  </div>
+</div>
+
+
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">🌡 Temperatura</h2>
+
+  <div style="text-align: center;">
+    <button onclick="leerTemperatura()">Leer Temperatura</button>
+    <div id="tempOutput" class="output" style="margin-top: 10px;"></div>
+  </div>
+</div>
+
+
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">💧 Calidad del Agua (TDS)</h2>
+
+  <div style="text-align: center;">
+    <button onclick="leerTDS()">Leer TDS</button>
+    <div id="tdsOutput" class="output" style="margin-top: 10px;"></div>
+  </div>
+</div>
+
+<div style="background-color: #232a34; padding: 20px; border-radius: 12px; margin: 20px auto; max-width: 400px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); color: #000;">
+  <h2 style="text-align: center; margin-top: 0;">🧾 Log de eventos</h2>
+
+  <div style="text-align: left;">
 <div id="logEventos"></div>
+  </div>
+</div>
 
 <!-- Firebase v8 (scripts clásicos) -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
@@ -128,6 +172,16 @@
     <input id="inputPin" type="password" placeholder="PIN" style="padding:10px; font-size:16px; border:none; border-radius:5px; width: 80%; margin-top:10px;"><br><br>
     <button onclick="validarPin()">Aceptar</button>
     <button onclick="cerrarModalPin()" style="background:#aaa; color:#000; margin-left:10px;">Cancelar</button>
+  </div>
+</div>
+
+<!-- 🔐 Cerradura Modal de PIN oculto -->
+<div id="modalPinCerradura" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000a; backdrop-filter: blur(4px); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#1a1a2e; padding:20px; border-radius:10px; text-align:center; color:white;">
+    <h3>🔐 Ingresar PIN de Seguridad</h3>
+    <input id="inputPinCerradura" type="password" placeholder="PIN" style="padding:10px; font-size:16px; border:none; border-radius:5px; width: 80%; margin-top:10px;"><br><br>
+    <button onclick="validarPinCerradura()">Aceptar</button>
+    <button onclick="cerrarModalPinCerradura()" style="background:#aaa; color:#000; margin-left:10px;">Cancelar</button>
   </div>
 </div>
 

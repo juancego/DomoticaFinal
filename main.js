@@ -60,30 +60,13 @@ function cerrarModalPin() {
   document.getElementById("inputPin").value = "";
 }
 
+function cerrarModalPinCerradura() {
+  document.getElementById("modalPinCerradura").style.display = "none";
+  document.getElementById("inputPinCerradura").value = "";
+}
+
 function toggleCerradura() {
-  console.log("👉 Intentando alternar cerradura...");
-
-  if (rol !== "padres") {
-    log("❌ Solo PADRES pueden controlar la cerradura");
-    return;
-  }
-
-  const pin = prompt("🔐 Ingresa el PIN de seguridad:");
-  if (pin !== "20112825") {
-    log("❌ PIN incorrecto. Cerradura no modificada.");
-    return;
-  }
-
-  const refCerradura = firebase.database().ref("padres/cerradura");
-
-  refCerradura.once("value").then(snapshot => {
-    const estadoActual = snapshot.val();
-    const nuevoEstado = estadoActual === 1 ? 0 : 1;
-
-    refCerradura.set(nuevoEstado).then(() => {
-      log(`🔐 Cerradura ${nuevoEstado === 1 ? "ACTIVADA" : "DESACTIVADA"}`);
-    });
-  });
+    document.getElementById("modalPinCerradura").style.display = "flex";
 }
 
 // 👇 ESTA LÍNEA ES CRUCIAL PARA QUE FUNCIONE EN HTML
@@ -109,6 +92,29 @@ function validarPin() {
   }, 1000);
 }
 
+function validarPinCerradura() {
+  const pinIngresado = document.getElementById("inputPinCerradura").value;
+
+  if (pinIngresado !== "20112825") {
+    log("❌ PIN incorrecto. No se alternó la cerradura");
+    cerrarModalPinCerradura();
+    return;
+  }
+
+  log("🔐 Cerradura alternada");
+  cerrarModalPinCerradura();
+
+  const refCerradura = firebase.database().ref("padres/cerradura");
+
+  refCerradura.once("value").then(snapshot => {
+    const estadoActual = snapshot.val();
+    const nuevoEstado = estadoActual === 1 ? 0 : 1;
+
+    refCerradura.set(nuevoEstado).then(() => {
+      log(`🔐 Cerradura ${nuevoEstado === 1 ? "ACTIVADA" : "DESACTIVADA"}`);
+    });
+  });
+}
 
 
 // 🔄 Leer el rol activo
