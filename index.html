@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <title>Smart Home</title>
+    <style>
+        body {
+          font-family: "Segoe UI", sans-serif;
+          background-color: #0a0f2c;
+          color: white;
+          padding: 20px;
+        }
+
+        h1, h2 {
+          text-align: center;
+          margin-top: 20px;
+        }
+
+        button {
+          display: block;
+          width: 90%;
+          max-width: 400px;
+          margin: 10px auto;
+          padding: 12px;
+          background-color: #1e88e5;
+          border: none;
+          border-radius: 8px;
+          color: white;
+          font-size: 16px;      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #1565c0;
+    }
+
+    #rolActual {
+      text-align: center;
+      font-size: 18px;
+      margin: 10px 0;
+      font-weight: bold;
+    }
+
+    #logEventos {
+      background-color: #1a237e;
+      margin: 20px auto;
+      padding: 10px;
+      width: 90%;
+      max-width: 600px;
+      height: 150px;
+      overflow-y: auto;
+      font-size: 14px;
+      border-radius: 10px;
+    }
+    div.output {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 16px;
+      color: #90caf9;
+    }
+    </style>
+</head>
+<body>
+<h1>Panel de Control</h1>
+
+<h2>Cerradura Principal</h2>
+<div id="estadoCerradura" style="text-align:center; margin-bottom:10px;">Estado: Cargando...</div>
+<button onclick="toggleCerradura()">Alternar Cerradura</button>
+
+<!-- 👤 Rol Actual y Botón -->
+<h2>Cambio de Rol</h2>
+<div id="rolActual">Rol: Cargando...</div>
+<button id="btnAccesoPadre" onclick="cambiarRol()">Cambiar Rol</button>
+
+<button onclick="registrarUsuarioFaceIO()">Registrar rostro</button>
+
+<!-- 🔁 Botón de reinicio con PIN -->
+<h2>Reinicio Seguro</h2>
+<button onclick="reiniciarApp()">Reiniciar aplicación</button>
+
+
+<!-- 🔦 Luces -->
+<h2>Luces</h2>
+<button onclick="toggleLed('cocina')">Cocina</button>
+<button onclick="toggleLed('sala')">Sala</button>
+<button onclick="toggleLed('bano')">Baño</button>
+<button onclick="toggleLed('alcoba')">Alcoba</button>
+
+<!-- 🚨 Alarma -->
+<h2>Alarma</h2>
+<button onclick="toggleAlarma()">Activar/Desactivar Alarma</button>
+<!-- 🪟 Persiana -->
+<h2>Persiana</h2>
+<button onclick="setPersiana(1)">Subir Persiana</button>
+<button onclick="setPersiana(0)">Bajar Persiana</button>
+
+<!-- 🌡 Temperatura -->
+<h2>Temperatura</h2>
+<button onclick="leerTemperatura()">Leer Temperatura</button>
+<div id="tempOutput" class="output"></div>
+
+<!-- 💧 Calidad del Agua -->
+<h2>Calidad del Agua (TDS)</h2>
+<button onclick="leerTDS()">Leer TDS</button>
+<div id="tdsOutput" class="output"></div>
+
+<!-- 🛢 Nivel del Tanque -->
+<h2>Nivel del Tanque</h2>
+<button onclick="leerTanque()">Leer Nivel</button>
+<div id="tanqueOutput" class="output"></div>
+
+
+<!-- 🧾 Log de eventos -->
+<h2>Eventos</h2>
+<div id="logEventos"></div>
+
+<!-- Firebase v8 (scripts clásicos) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+<script src="https://cdn.faceio.net/fio.js"></script>
+<script defer src="main.js"></script>
+
+<!-- 🔐 Modal de PIN oculto -->
+<div id="modalPin" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000a; backdrop-filter: blur(4px); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:#1a1a2e; padding:20px; border-radius:10px; text-align:center; color:white;">
+    <h3>🔐 Ingresar PIN de Seguridad</h3>
+    <input id="inputPin" type="password" placeholder="PIN" style="padding:10px; font-size:16px; border:none; border-radius:5px; width: 80%; margin-top:10px;"><br><br>
+    <button onclick="validarPin()">Aceptar</button>
+    <button onclick="cerrarModalPin()" style="background:#aaa; color:#000; margin-left:10px;">Cancelar</button>
+  </div>
+</div>
+
+
+</body>
+</html>
