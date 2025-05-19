@@ -1,4 +1,4 @@
-const faceio = new faceIO("fioafa39"); // Tu publicId real
+const faceio = new faceIO("fioa7cb0"); // Tu publicId real
 
 // Inicialización de Firebase v8
 const firebaseConfig = {
