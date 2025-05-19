@@ -1,4 +1,4 @@
-const faceio = new faceIO("fioa1eb9"); // Tu publicId real
+const faceio = new faceIO("fioa185b"); // Tu publicId real
 
 // Inicialización de Firebase v8
 const firebaseConfig = {
@@ -171,16 +171,27 @@ function toggleLed(area) {
 
 // 🌡 Leer temperatura
 function leerTemperatura() {
-    if (cerraduraActiva) {
+  if (cerraduraActiva) {
     log("❌ Cerradura activada. Desactívela para usar esta función.");
     return;
   }
-  if (rol !== "padres") return log("❌ Solo PADRES pueden leer temperatura");
+  if (rol !== "padres") {
+    log("❌ Solo PADRES pueden leer temperatura");
+    return;
+  }
+
   firebase.database().ref("padres/temperatura").once("value").then(snapshot => {
-    document.getElementById("tempOutput").innerText = `Temp: ${snapshot.val()}°C`;
-    log("🌡 Temperatura leída");
+    const temp = snapshot.val();
+
+    if (temp > 5) {
+      document.getElementById("tempOutput").innerText = `Temp: ${temp}°C`;
+      log(`🌡 Temperatura leída: ${temp}°C`);
+    } else {
+      console.log(`🌡 Temperatura ignorada (<5°C): ${temp}°C`);
+    }
   });
 }
+
 
 // 🚨 Alarma
 function toggleAlarma() {
@@ -219,6 +230,20 @@ function leerTDS() {
     document.getElementById("tdsOutput").innerText = `TDS: ${snapshot.val()}`;
     log("💧 Calidad del agua leída");
   });
+}
+
+// Función para leer temperatura
+function leerTemperatura() {
+  const ref = db.ref("padres/temperatura");
+
+  ref.once("value")
+    .then(snapshot => {
+      const temp = snapshot.val();
+      document.getElementById("tempOutput").innerText = `🌡 Temperatura: ${temp}°C`;
+    })
+    .catch(error => {
+      console.error("❌ Error al leer temperatura:", error);
+    });
 }
 
 // 🛢 Nivel del tanque
